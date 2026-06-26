@@ -3,6 +3,9 @@
 
 #include "MovingPlatform.h"
 
+float MoveTimer = 0.0f;
+float VelocityMod = 1.0f;
+
 // Sets default values
 AMovingPlatform::AMovingPlatform()
 {
@@ -16,10 +19,7 @@ void AMovingPlatform::BeginPlay()
 {
 	Super::BeginPlay();
 
-	int SomeNumber = 3;
-	bool bSomeBool = false;
-
-	UE_LOG(LogTemp, Warning, TEXT("Hello, I'm starting to play! This is my number: %d | This is my bool"), SomeNumber);
+	SetActorLocation(InitialLocation);
 }
 
 // Called every frame
@@ -27,5 +27,19 @@ void AMovingPlatform::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	FRotator CurrentRotation = GetActorRotation();
+	SetActorRotation(CurrentRotation + RotationPace);
+
+	FVector CurrentLocation = GetActorLocation();
+
+	MoveTimer += DeltaTime;
+
+	if (MoveTimer >= MoveFrequency)
+	{
+		VelocityMod *= -1.0f;
+		MoveTimer = 0.0f;
+	}
+
+	SetActorLocation(CurrentLocation + (Velocity * VelocityMod));
 }
 

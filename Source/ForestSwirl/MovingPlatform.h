@@ -16,6 +16,16 @@ public:
 	// Sets default values for this actor's properties
 	AMovingPlatform();
 
+private:
+	UPROPERTY(EditAnywhere)
+	FVector InitialLocation = FVector(100.0f, 100.0f, 100.0f);
+	UPROPERTY(EditAnywhere)
+	FRotator RotationPace = FRotator(0.0f, 00.0f, 10.0f);
+	UPROPERTY(EditAnywhere)
+	FVector Velocity = FVector(0.0f, 0.0f, 10.0f);
+	UPROPERTY(EditAnywhere)
+	float MoveFrequency = 10.0f;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
